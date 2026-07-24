@@ -1,7 +1,8 @@
+const API_URL = "http://65.2.74.56:8000";
+
 let lastResponse = "";
 
 async function sendMessage() {
-
     let input = document.getElementById("userInput");
     let chat = document.getElementById("chat-box");
 
@@ -11,13 +12,11 @@ async function sendMessage() {
     }
 
     let prompt = input.value;
-
     chat.innerHTML += `<p><b>You:</b> ${prompt}</p>`;
 
     try {
-
         const response = await fetch(
-            `http://127.0.0.1:8000/${encodeURIComponent(prompt)}`
+            `${API_URL}/${encodeURIComponent(prompt)}`
         );
 
         const data = await response.json();
@@ -25,11 +24,8 @@ async function sendMessage() {
         lastResponse = data.response;
 
         chat.innerHTML += `<p><b>StudyGen AI:</b><br>${data.response}</p>`;
-
     } catch (error) {
-
         chat.innerHTML += `<p><b>StudyGen AI:</b> Unable to connect to backend.</p>`;
-
     }
 
     input.value = "";
@@ -37,7 +33,6 @@ async function sendMessage() {
 }
 
 async function summarizeNotes() {
-
     let input = document.getElementById("userInput");
 
     if (input.value.trim() === "") {
@@ -50,7 +45,7 @@ async function summarizeNotes() {
         input.value;
 
     const response = await fetch(
-        `http://127.0.0.1:8000/${encodeURIComponent(prompt)}`
+        `${API_URL}/${encodeURIComponent(prompt)}`
     );
 
     const data = await response.json();
@@ -62,7 +57,6 @@ async function summarizeNotes() {
 }
 
 async function generateQuiz() {
-
     let input = document.getElementById("userInput");
 
     if (input.value.trim() === "") {
@@ -75,7 +69,7 @@ async function generateQuiz() {
         input.value;
 
     const response = await fetch(
-        `http://127.0.0.1:8000/${encodeURIComponent(prompt)}`
+        `${API_URL}/${encodeURIComponent(prompt)}`
     );
 
     const data = await response.json();
@@ -87,7 +81,6 @@ async function generateQuiz() {
 }
 
 async function explainTopic() {
-
     let input = document.getElementById("userInput");
 
     if (input.value.trim() === "") {
@@ -100,7 +93,7 @@ async function explainTopic() {
         input.value;
 
     const response = await fetch(
-        `http://127.0.0.1:8000/${encodeURIComponent(prompt)}`
+        `${API_URL}/${encodeURIComponent(prompt)}`
     );
 
     const data = await response.json();
@@ -112,7 +105,6 @@ async function explainTopic() {
 }
 
 async function examAnswer() {
-
     let input = document.getElementById("userInput");
 
     if (input.value.trim() === "") {
@@ -125,7 +117,7 @@ async function examAnswer() {
         input.value;
 
     const response = await fetch(
-        `http://127.0.0.1:8000/${encodeURIComponent(prompt)}`
+        `${API_URL}/${encodeURIComponent(prompt)}`
     );
 
     const data = await response.json();
@@ -137,7 +129,6 @@ async function examAnswer() {
 }
 
 async function uploadPDF() {
-
     const fileInput = document.getElementById("pdfFile");
 
     if (fileInput.files.length === 0) {
@@ -146,13 +137,11 @@ async function uploadPDF() {
     }
 
     const formData = new FormData();
-
     formData.append("file", fileInput.files[0]);
 
     try {
-
         const response = await fetch(
-            "http://127.0.0.1:8000/upload",
+            `${API_URL}/upload`,
             {
                 method: "POST",
                 body: formData
@@ -165,24 +154,18 @@ async function uploadPDF() {
 
         document.getElementById("chat-box").innerHTML +=
             `<p><b>PDF Summary:</b><br>${data.summary}</p>`;
-
     } catch (error) {
-
         document.getElementById("chat-box").innerHTML +=
             `<p><b>StudyGen AI:</b> PDF upload failed.</p>`;
-
     }
 }
 
 function clearChat() {
-
     document.getElementById("chat-box").innerHTML = "";
     lastResponse = "";
-
 }
 
 function speakAnswer() {
-
     if (lastResponse === "") {
         alert("No response available.");
         return;
@@ -191,24 +174,21 @@ function speakAnswer() {
     speechSynthesis.cancel();
 
     const speech = new SpeechSynthesisUtterance(lastResponse);
-
     speech.lang = "en-US";
     speech.rate = 1;
     speech.pitch = 1;
 
     speechSynthesis.speak(speech);
-
 }
 
 async function downloadPDF() {
-
     if (lastResponse === "") {
         alert("Nothing to download.");
         return;
     }
 
     const response = await fetch(
-        "http://127.0.0.1:8000/download",
+        `${API_URL}/download`,
         {
             method: "POST",
             headers: {
@@ -227,11 +207,9 @@ async function downloadPDF() {
     const a = document.createElement("a");
 
     a.href = url;
-
     a.download = "StudyGen_Report.pdf";
 
     a.click();
 
     window.URL.revokeObjectURL(url);
-
 }
