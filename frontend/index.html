@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyGen AI</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📚 StudyGen AI</h1>
+
+    <p>Your Personal AI Study Assistant</p>
+
+    <div id="chat-box"></div>
+
+    <div class="upload-area">
+
+        <input
+            type="file"
+            id="pdfFile"
+            accept=".pdf"
+        >
+
+        <button onclick="uploadPDF()">
+            📄 Upload PDF
+        </button>
+
+    </div>
+
+    <div class="input-area">
+
+        <input
+            type="text"
+            id="userInput"
+            placeholder="Ask anything..."
+        >
+
+        <button onclick="sendMessage()">
+            Send
+        </button>
+
+        <button onclick="summarizeNotes()">
+            Summarize
+        </button>
+
+        <button onclick="generateQuiz()">
+            Quiz
+        </button>
+
+        <button onclick="explainTopic()">
+            Explain
+        </button>
+
+        <button onclick="examAnswer()">
+            Exam Answer
+        </button>
+
+        <button onclick="clearChat()">
+            🗑 Clear Chat
+        </button>
+
+        <button onclick="speakAnswer()">
+            🔊 Read Answer
+        </button>
+
+        <button onclick="downloadPDF()">
+            📥 Download PDF
+        </button>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
